@@ -12,7 +12,7 @@ Route::post('/logout', [ControllerAuth::class, 'logout'])->name('logout');
 Route::get('/register', [ControllerAuth::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [ControllerAuth::class, 'register']);
 
-// Nodrosinam drosu autorizaciju
+// For users
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/', [ControllerHome::class, 'index'])->name('home');
@@ -21,8 +21,11 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
+// For Admins
 Route::middleware(['auth', AdminMiddleware::class])->group(function () {
 
+    Route::get('product/create', [ControllerProducts::class, 'create'])->name('product.create');
+    Route::post('product/store', [ControllerProducts::class, 'store'])->name('product.store');
     Route::resource('product', ControllerProducts::class);
 
 });

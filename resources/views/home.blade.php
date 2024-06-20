@@ -26,7 +26,7 @@
                                 <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
                             </form>
                         @endif
-                            <a href="{{route('product.show', $product->id)}}" class="btn btn-sm btn-primary">View</a>
+                        <a href="{{route('product.show', $product->id)}}" class="btn btn-sm btn-primary">View</a>
 
                     </td>
                 </tr>
@@ -40,6 +40,5 @@
                 </form>
             </div>
         @endif
-
     </div>
 @endsection

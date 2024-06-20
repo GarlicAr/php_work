@@ -2,32 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Enums\Action;
+use App\Models\Enums\Type;
 use App\Models\Product;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use mysql_xdevapi\Exception;
+use App\Models\UserActionLogs;
 
 class ControllerProducts extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    protected $actionLoggerController;
+
+    public function __construct(ControllerActionLog $actionLoggerController)
+    {
+        $this->actionLoggerController = $actionLoggerController;
+    }
+
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('product.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -36,16 +37,15 @@ class ControllerProducts extends Controller
             'price_per_unit' => 'required|numeric|min:0',
         ]);
 
-        Product::create($request->all());
+        $product = Product::create($request->all());
+
+        $this->actionLoggerController->logUserAction(auth()->id(), Action::CREATED, Type::PRODUCT, $product->id);
 
         return redirect()->route('home')
             ->with('success', 'Product created successfully.');
 
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
         try {
@@ -60,14 +60,12 @@ class ControllerProducts extends Controller
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
     {
         try {
 
             $product = Product::findOrFail($id);
+
             return view('product.edit')->with('product', $product);
 
         }catch (Exception $e){
@@ -78,9 +76,6 @@ class ControllerProducts extends Controller
 
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
         try {
@@ -94,6 +89,8 @@ class ControllerProducts extends Controller
             $product = Product::findOrFail($id);
             $product->update($request->all());
 
+            $this->actionLoggerController->logUserAction(auth()->id(), Action::UPDATED, Type::PRODUCT, $product->id);
+
             return redirect()->route('home')
                 ->with('success', 'Product updated successfully.');
 
@@ -105,15 +102,14 @@ class ControllerProducts extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
         try {
 
             $product = Product::findOrFail($id);
             $product->delete();
+
+            $this->actionLoggerController->logUserAction(auth()->id(), Action::DELETED, Type::PRODUCT, $product->id);
 
             return redirect()->route('home')
                 ->with('success', 'Product deleted successfully.');
