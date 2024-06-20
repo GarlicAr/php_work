@@ -1,0 +1,60 @@
+.login-container{
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+}
+
+.content{
+    display: flex;
+    justify-content: center;
+
+}
+
+.btn-margin{
+    margin-top: 15px;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+}
+
+.edit-form{
+    display: flex;
+    justify-content: center;
+}
+
+.view-product {
+    max-width: 600px;
+    margin: auto;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.card-body {
+    padding: 1.25rem;
+}
+
+.card-title {
+    margin-bottom: 1.25rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.underline{
+    border-bottom: 1px solid gray;
+}
+
+.login-container-wrap{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
