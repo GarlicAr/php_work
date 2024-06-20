@@ -6,7 +6,7 @@ use App\Models\Enums\Action;
 use App\Models\Enums\Type;
 use App\Models\Product;
 use App\Http\Controllers\Controller;
-use Messages;
+use Resources\Constants\Messages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;

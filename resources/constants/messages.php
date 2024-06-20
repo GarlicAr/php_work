@@ -1,5 +1,7 @@
 <?php
 
+namespace Resources\Constants;
+
 class Messages
 {
     const PRODUCT_CREATED_SUCCESSFULLY ='Product has been created successfully';
