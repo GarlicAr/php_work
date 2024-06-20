@@ -55,7 +55,7 @@ class ControllerProducts extends Controller
         try {
 
             $product = Product::findOrFail($id);
-            return view('product.show') -> with('product', $product);
+            return view('product.show')->with('product', $product);
 
         }catch (Exception $e){
 

@@ -26,7 +26,7 @@
                                 <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
                             </form>
                         @endif
-                        <a href="{{route('product.show', $product->id)}}" class="btn btn-sm btn-primary">View</a>
+                            <a href="{{ url('product/' . $product->id . '/show') }}" class="btn btn-sm btn-secondary">View</a>
 
                     </td>
                 </tr>
@@ -35,9 +35,7 @@
         </table>
         @if(auth()->user()->is_admin)
             <div class="add-new-container">
-                <form action="{{ route('product.create') }}" method="GET">
-                    <button type="submit" class="btn btn-margin btn-success">CREATE NEW</button>
-                </form>
+                <a class="btn btn-margin btn-success" href="{{ route('product.create') }}">CREATE NEW</a>
             </div>
         @endif
     </div>

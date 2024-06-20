@@ -19,7 +19,7 @@ Route::get('api/logs', [ControllerActionLog::class, 'getRecentLogs']);
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/', [ControllerHome::class, 'index'])->name('home');
-    Route::get('/product/{id}', [ControllerProducts::class, 'show'])->name('product.show');
+    Route::get('/product/{id}/show', [ControllerProducts::class, 'show'])->name('product.show');
 
 
 });
@@ -27,8 +27,6 @@ Route::middleware(['auth'])->group(function () {
 // For Admins
 Route::middleware(['auth', AdminMiddleware::class])->group(function () {
 
-    Route::get('/product/create', [ControllerProducts::class, 'create'])->name('product.create');
-    Route::post('/product/store', [ControllerProducts::class, 'store'])->name('product.store');
     Route::resource('product', ControllerProducts::class);
 
 });
