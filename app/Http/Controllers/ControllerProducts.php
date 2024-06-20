@@ -6,9 +6,13 @@ use App\Models\Enums\Action;
 use App\Models\Enums\Type;
 use App\Models\Product;
 use App\Http\Controllers\Controller;
+use Messages;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 use mysql_xdevapi\Exception;
 use App\Models\UserActionLogs;
+
 
 class ControllerProducts extends Controller
 {
@@ -24,7 +28,7 @@ class ControllerProducts extends Controller
         //
     }
 
-    public function create()
+    public function create(): View
     {
         return view('product.create');
     }
@@ -39,10 +43,10 @@ class ControllerProducts extends Controller
 
         $product = Product::create($request->all());
 
-        $this->actionLoggerController->logUserAction(auth()->id(), Action::CREATED, Type::PRODUCT, $product->id);
+        $this->actionLoggerController->logUserAction(auth()->id(), Action::CREATED, Type::PRODUCT, $product->id, );
 
         return redirect()->route('home')
-            ->with('success', 'Product created successfully.');
+            ->with('success', Messages::PRODUCT_CREATED_SUCCESSFULLY);
 
     }
 
@@ -92,7 +96,7 @@ class ControllerProducts extends Controller
             $this->actionLoggerController->logUserAction(auth()->id(), Action::UPDATED, Type::PRODUCT, $product->id);
 
             return redirect()->route('home')
-                ->with('success', 'Product updated successfully.');
+                ->with('success', Messages::PRODUCT_UPDATED_SUCCESSFULLY);
 
         }catch (Exception $e){
 
@@ -112,7 +116,7 @@ class ControllerProducts extends Controller
             $this->actionLoggerController->logUserAction(auth()->id(), Action::DELETED, Type::PRODUCT, $product->id);
 
             return redirect()->route('home')
-                ->with('success', 'Product deleted successfully.');
+                ->with('success', Messages::PRODUCT_DELETED_SUCCESSFULLY);
         }catch (Exception $e){
 
             return redirect()->route('home')->with('error', $e->getMessage());

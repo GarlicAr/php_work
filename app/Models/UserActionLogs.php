@@ -12,6 +12,7 @@ class UserActionLogs extends Model
 
     protected $fillable = [
         'user_id',
+        'user_email',
         'action',
         'action_model',
         'action_model_id'
